@@ -8,7 +8,10 @@ class State:
         self.y = y
 
 
-def create_set_of_states(size):
+size = 4
+
+
+def create_set_of_states(size_of_set):
     result = []
     for i in range(size - 1):
         for j in range(size - 1):
@@ -16,13 +19,6 @@ def create_set_of_states(size):
     return result
 
 
-def create_set_of_transitions(set_of_states, set_of_actions):
-    result = []
-    for state in set_of_states:
-        for action in set_of_actions:
-            for succ_state in set_of_actions:
-                result.append({'s': state, 'a': action, 's_succ': succ_state})
-    return result
 
 
 init_set_of_states = create_set_of_states(3)
@@ -35,17 +31,39 @@ def delta_x(state1, state2):
 
 def delta_y(state1, state2):
     return np.abs(state1.y - state2.y)
+def create_set_of_transitions(set_of_states, set_of_actions):
+    result = []
+    for state in set_of_states:
+        for action in set_of_actions:
+            for succ_state in set_of_actions:
+                result.append({'s': state, 'a': action, 's_succ': succ_state})
+
+    filtered_result = [triple for triple in result if  (delta_x(triple['s'], triple['s_succ']) > 1 or delta_y(triple['s'], triple['s_succ'])) > 1 or (
+                delta_x(triple['s'], triple['s_succ']) == 1 or delta_y(triple['s'], triple['s_succ']) == 1)]
+
+    return filtered_result
+
 
 def calculate_prob(transition):
+    left_border = transition.s.x == 0
+    right_border = transition.s.x == size - 1
+    top_border = transition.s.y = 0
+    bottom_border = transition.s.y = size - 1
+
+    if transition.a == init_set_of_actions[0]: #up
+        if top_border:
+            return 0.8
+        else
 
 
 def create_transition_probability(set_of_transitions):
     result = []
     for triple in set_of_transitions:
-        if delta_x(triple.s, triple.s_succ) > 1 or delta_y(triple.s, triple.s_succ) > 1:
+        if delta_x(triple.s, triple.s_succ) > 1 or delta_y(triple.s, triple.s_succ) > 1 or (
+                delta_x(triple.s, triple.s_succ) == 1 or delta_y(triple.s, triple.s_succ) == 1):
             result.append({'t': triple, 'p': 0})
         else:
-            result.append({'t':triple,'p': calculate_prob(triple)})
+            result.append({'t': triple, 'p': calculate_prob(triple)})
     return result
 
 
