@@ -5,76 +5,9 @@ from numpy.random import normal
 from numpy import mean
 from numpy import std
 from scipy.stats import norm
+from transition import Transition
+from state import State
 
-
-class State:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.start = False
-        self.end = False
-        self.penalty = False
-        self.value = 0
-
-    def get_x(self):
-        return self.x
-
-    def get_y(self):
-        return self.y
-
-    def get_start(self):
-        return self.start
-
-    def set_start(self, start):
-        self.start = start
-
-    def get_end(self):
-        return self.end
-
-    def set_end(self, end):
-        self.end = end
-
-    def get_value(self):
-        return self.value
-
-    def set_value(self, value):
-        self.value = round(value, 2)
-
-    def set_penalty(self, penalty):
-        self.penalty = penalty
-
-    def get_penalty(self):
-        return self.penalty
-
-
-class Transition:
-    def __init__(self, state, action, state_succ):
-        self.s = state
-        self.a = action
-        self.s_succ = state_succ
-        self.prob = 0
-        self.reward = 0
-
-    def get_state(self):
-        return self.s
-
-    def get_action(self):
-        return self.a
-
-    def get_succ_state(self):
-        return self.s_succ
-
-    def set_prob(self, prob):
-        self.prob = prob
-
-    def set_reward(self, reward):
-        self.reward = reward
-
-    def get_prob(self):
-        return self.prob
-
-    def get_reward(self):
-        return self.reward
 
 
 def create_set_of_states(size_of_set):
